@@ -2,6 +2,36 @@
 import axios from 'axios'
 import constants from '../Shared/Types/constants'
 
+const apiUrl = import.meta.env.VITE_AXIOS_BASE_URL_DEV;
+console.log("API URL:", import.meta.env.VITE_AXIOS_BASE_URL_DEV);
+
+
+/*
+  Register Email verification
+*/
+export const emailVerification = (studentData) => (dispatch) => {
+  dispatch({ type: constants.CLEAR_SEND_OTP_SIGNUP })
+  axios.post(`${apiUrl}/v1/student/email-otp-send`, studentData).then((response) => {
+    dispatch({
+      type: constants.SEND_OTP_SIGNUP,
+      payload: {
+        resStatus: true,
+        resMessage: response.data.message,
+        isEmailAddressVerified: true
+      }
+    })
+  }).catch((error) => {
+    dispatch({
+      type: constants.SEND_OTP_SIGNUP,
+      payload: {
+        resStatus: false,
+        resMessage: error?.response?.data?.message,
+        isEmailAddressVerified: false
+      }
+    })
+  })
+}
+
 /* login action method */
 export const login = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_LOGIN })
@@ -376,31 +406,7 @@ export const studentRegister = (studentData) => (dispatch) => {
   })
 }
 
-/*
-  Register Email verification
-*/
-export const emailVerification = (studentData) => (dispatch) => {
-  dispatch({ type: constants.CLEAR_SEND_OTP_SIGNUP })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/email-otp-send`, studentData).then((response) => {
-    dispatch({
-      type: constants.SEND_OTP_SIGNUP,
-      payload: {
-        resStatus: true,
-        resMessage: response.data.message,
-        isEmailAddressVerified: true
-      }
-    })
-  }).catch((error) => {
-    dispatch({
-      type: constants.SEND_OTP_SIGNUP,
-      payload: {
-        resStatus: false,
-        resMessage: error?.response?.data?.message,
-        isEmailAddressVerified: false
-      }
-    })
-  })
-}
+
 
 /*
   Register OTP verification
