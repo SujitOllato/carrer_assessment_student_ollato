@@ -12,8 +12,8 @@ import { useSnackbar } from 'react-notistack'
 import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import ImageViewer from 'react-simple-image-viewer'
-import ReactHtmlParser from 'react-html-parser'
-import MathJax from 'react-mathjax'
+// import ReactHtmlParser from 'react-html-parser'
+// import MathJax from 'react-mathjax'
 import {
   getQuestionsByIDAction,
   submitAnswer,
@@ -22,7 +22,7 @@ import {
 import moment from 'moment'
 import timerline from '../../assets/images/red-timer-line.svg'
 import Timesup from './Timesup'
-// import { MathJax, MathJaxContext } from 'better-react-mathjax'
+import { MathJax, MathJaxContext } from 'better-react-mathjax'
 import parse from 'html-react-parser'
 import Loader from '../../Components/Loader'
 import SpinnerLoader from '../../Components/CommonSpinner'
