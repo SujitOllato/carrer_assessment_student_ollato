@@ -1,11 +1,12 @@
 
 import axios from 'axios'
 import constants from '../Shared/Types/constants'
+const apiUrl = import.meta.env.VITE_AXIOS_BASE_URL_DEV;
 
 // Available Slots
 export const getAllAvailableSlots = (token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_AVAILABLE_SLOTS })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/time-slots`, { headers: { Authorization: token } }).then((response) => {
+  axios.get(`${apiUrl}/api/v1/student/time-slots`, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_AVAILABLE_SLOTS,
       payload: {
@@ -28,7 +29,7 @@ export const getAllAvailableSlots = (token) => (dispatch) => {
 // Counsellor Data
 export const getAllCounsellorData = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_FILTERED_COUNSELLOR })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/counsellor/get-filtered-counsellors`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/counsellor/get-filtered-counsellors`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_FILTERED_COUNSELLOR,
       payload: {
@@ -51,7 +52,7 @@ export const getAllCounsellorData = (data, token) => (dispatch) => {
 // Session History Data
 export const getSessionsHistory = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_SESSION_HISTORY })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/counsellor/get-sessions`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/counsellor/get-sessions`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_SESSION_HISTORY,
       payload: {
@@ -74,7 +75,7 @@ export const getSessionsHistory = (data, token) => (dispatch) => {
 // CounsellorDetails
 export const getCounsellorDetails = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_COUNSELLOR_DETAILS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/counsellor/get-counsellor`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/counsellor/get-counsellor`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_COUNSELLOR_DETAILS,
       payload: {
@@ -97,7 +98,7 @@ export const getCounsellorDetails = (data, token) => (dispatch) => {
 // Counsellor Avialble Solts
 export const getCounsellorAvailableSlots = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_COUNSELLOR_AVAILABLE_SLOTS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/counsellor/get-available-counsellor`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/counsellor/get-available-counsellor`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_COUNSELLOR_AVAILABLE_SLOTS,
       payload: {
@@ -120,7 +121,7 @@ export const getCounsellorAvailableSlots = (data, token) => (dispatch) => {
 // book session
 export const bookSession = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_BOOK_SESSION })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/session/book`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/session/book`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.BOOK_SESSION,
       payload: {
@@ -147,7 +148,7 @@ export const getSessionDetails = (data, token) => (dispatch) => {
     sessionId: data?.id
   }
   dispatch({ type: constants.CLEAR_SESSION_DETAILS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/counsellor/session`, dataObject
+  axios.post(`${apiUrl}/api/v1/student/counsellor/session`, dataObject
     , { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.SESSION_DETAILS,
@@ -171,7 +172,7 @@ export const getSessionDetails = (data, token) => (dispatch) => {
 // Session Details
 export const sessionReschedule = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_COUNSELLOR_RESCHEDULE })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/counsellor/reschedule-session`, data
+  axios.post(`${apiUrl}/api/v1/counsellor/reschedule-session`, data
     , { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.COUNSELLOR_RESCHEDULE,
@@ -196,7 +197,7 @@ export const sessionReschedule = (data, token) => (dispatch) => {
 // Session Details
 export const sessionCancel = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_CANCEL_SESSION })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/counsellor/cancel-session`, data
+  axios.post(`${apiUrl}/api/v1/counsellor/cancel-session`, data
     , { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.CANCEL_SESSION,
@@ -221,7 +222,7 @@ export const sessionCancel = (data, token) => (dispatch) => {
 // Report
 export const report = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_REPORT_SESSION })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/session/report`, data
+  axios.post(`${apiUrl}/api/v1/student/session/report`, data
     , { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.REPORT_SESSION,
@@ -246,7 +247,7 @@ export const report = (data, token) => (dispatch) => {
 // Ratings
 export const ratings = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_RATINGS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/session/ratings`, data
+  axios.post(`${apiUrl}/api/v1/student/session/ratings`, data
     , { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.RATINGS,

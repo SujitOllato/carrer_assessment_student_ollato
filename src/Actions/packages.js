@@ -2,11 +2,12 @@
 
 import axios from 'axios'
 import constants from '../Shared/Types/constants'
+const apiUrl = import.meta.env.VITE_AXIOS_BASE_URL_DEV;
 
 /* Get All Packages Data */
 export const getPackagesDataAction = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_PACKAGES_DATA })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/packages`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/packages`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_PACKAGES_DATA,
       payload: {
@@ -35,7 +36,7 @@ export const getPackageDataByIDAction = (data, token) => (dispatch) => {
     id: Number(data)
   }
   dispatch({ type: constants.CLEAR_GET_PACKAGES_DATA_ID })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/packages/get`, dataObject, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/packages/get`, dataObject, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_PACKAGES_DATA_ID,
       payload: {
@@ -66,7 +67,7 @@ export const getActivePackagesDataAction = (search, token) => (dispatch) => {
     data = { }
   }
   dispatch({ type: constants.CLEAR_GET_ACTIVE_PACKAGES })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/active-purchased-packages`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/active-purchased-packages`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ACTIVE_PACKAGES,
       payload: {
@@ -89,7 +90,7 @@ export const getActivePackagesDataAction = (search, token) => (dispatch) => {
 /* Get All add On Packages Data */
 export const getAllAddOnPackagesDataAction = (token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ADD_ON_PACKAGES })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/add-on-packages`, { }, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/add-on-packages`, { }, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ADD_ON_PACKAGES,
       payload: {
@@ -112,7 +113,7 @@ export const getAllAddOnPackagesDataAction = (token) => (dispatch) => {
 /* Get All Packages History Data */
 export const getAllPackageHistoryDataAction = (token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_PACKAGE_HISTORY_LIST })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/purchased-packages`, { }, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/purchased-packages`, { }, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_PACKAGE_HISTORY_LIST,
       payload: {
@@ -135,7 +136,7 @@ export const getAllPackageHistoryDataAction = (token) => (dispatch) => {
 /* Get All Packages History Data */
 export const downloadInvoice = (id, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_PACKAGE_HISTORY_LIST })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/purchased-package/invoice/${id}`, { headers: { Authorization: token } }).then((response) => {
+  axios.get(`${apiUrl}/api/v1/student/purchased-package/invoice/${id}`, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_PACKAGE_HISTORY_LIST,
       payload: {
@@ -159,7 +160,7 @@ export const downloadInvoice = (id, token) => (dispatch) => {
 /* Get All Other Packages Data */
 export const getOtherPackagesAction = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_OTHER_PACKAGES })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/others-packages`, { }, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/others-packages`, { }, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_OTHER_PACKAGES,
       payload: {
@@ -182,7 +183,7 @@ export const getOtherPackagesAction = (data, token) => (dispatch) => {
 /* Get All Other Packages Data */
 export const purchasePackageAction = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_PURCHASED_PACKAGE })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/packages/purchase`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/packages/purchase`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.PURCHASED_PACKAGE,
       payload: {
@@ -205,7 +206,7 @@ export const purchasePackageAction = (data, token) => (dispatch) => {
 /* Get All Other Packages Data */
 export const purchasePackageSucees = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_PACKAGE_PURCHASE_SUCCESS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/purchase/success`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/purchase/success`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.PACKAGE_PURCHASE_SUCCESS,
       payload: {
@@ -229,7 +230,7 @@ export const purchasePackageSucees = (data, token) => (dispatch) => {
 export const purchasePackageActionn = (data, token, navigate) => (dispatch) => {
   dispatch({ type: constants.CLEAR_PURCHASED_PACKAGE })
   // dispatch({ type: constants.CLEAR_PACKAGE_PURCHASE_SUCCESS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/payment/payumoney`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/payment/payumoney`, data, { headers: { Authorization: token } }).then((response) => {
     const newdata = response.data.data
     navigate('/payment-form', { state: { newdata } })
   }
@@ -247,7 +248,7 @@ export const purchasePackageActionn = (data, token, navigate) => (dispatch) => {
 
 export const applycouponcode = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_APPLY_COUPON_SUCCESS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/coupon/apply`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/coupon/apply`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.APPLY_COUPON_SUCCESS,
       payload: {

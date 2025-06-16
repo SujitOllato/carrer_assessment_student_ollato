@@ -11,7 +11,7 @@ console.log("API URL:", import.meta.env.VITE_AXIOS_BASE_URL_DEV);
 */
 export const emailVerification = (studentData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_SEND_OTP_SIGNUP })
-  axios.post(`${apiUrl}/v1/student/email-otp-send`, studentData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/email-otp-send`, studentData).then((response) => {
     dispatch({
       type: constants.SEND_OTP_SIGNUP,
       payload: {
@@ -35,7 +35,7 @@ export const emailVerification = (studentData) => (dispatch) => {
 /* login action method */
 export const login = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_LOGIN })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/login-with-password`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/login-with-password`, userData).then((response) => {
     localStorage.setItem('token', response.data.Authorization)
     localStorage.setItem('profile', JSON.stringify({ first_name: response.data.data.first_name, last_name: response.data.data.last_name, profile: response.data.data.profile }))
     dispatch({
@@ -63,7 +63,7 @@ export const login = (userData) => (dispatch) => {
 /* login with otp */
 export const sendOTP = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_SEND_OTP })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/login-with-otp`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/login-with-otp`, userData).then((response) => {
     dispatch({
       type: constants.SEND_OTP,
       payload: {
@@ -87,7 +87,7 @@ export const sendOTP = (userData) => (dispatch) => {
 /* login with otp - verify otp */
 export const verifyOtp = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_VERIFY_OTP })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/login-with-verify-otp`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/login-with-verify-otp`, userData).then((response) => {
     localStorage.setItem('token', response.data.Authorization)
     dispatch({
       type: constants.VERIFY_OTP,
@@ -113,7 +113,7 @@ export const verifyOtp = (userData) => (dispatch) => {
 
 export const verifyForgotPasswordOTP = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_VERIFY_FORGOT_PASSWORD })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/otp-verification`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/otp-verification`, userData).then((response) => {
     dispatch({
       type: constants.VERIFY_FORGOT_PASSWORD,
       payload: {
@@ -136,7 +136,7 @@ export const verifyForgotPasswordOTP = (userData) => (dispatch) => {
 
 export const resetPassword = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_RESET_PASSWORD })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/reset-password`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/reset-password`, userData).then((response) => {
     dispatch({
       type: constants.RESET_PASSWORD,
       payload: {
@@ -160,7 +160,7 @@ export const resetPassword = (userData) => (dispatch) => {
 /* forgot password verify email */
 export const forgotPasswordVerifyEmail = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_FORGET_PASSWORD_VERIFY_EMAIL })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/forgot-password`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/forgot-password`, userData).then((response) => {
     dispatch({
       type: constants.FORGET_PASSWORD_VERIFY_EMAIL,
       payload: {
@@ -209,7 +209,7 @@ export const getDummyData = () => (dispatch) => {
 // verify email -Forgot Password
 export const emailVerifiedAction = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_EMAIL_VERIFY_FORGOT_PASSWORD })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/forgot-password`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/forgot-password`, userData).then((response) => {
     // localStorage.setItem('authToken', response.data.Authorization)
     dispatch({
       type: constants.EMAIL_VERIFY_FORGOT_PASSWORD,
@@ -235,7 +235,7 @@ export const emailVerifiedAction = (userData) => (dispatch) => {
 // verify otp -Forgot Password
 export const otpVerifiedAction = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_OTP_VERIFICATION_FORGOT_PASSWORD })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/otp-verification`, userData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/otp-verification`, userData).then((response) => {
     dispatch({
       type: constants.OTP_VERIFICATION_FORGOT_PASSWORD,
       payload: {
@@ -261,7 +261,7 @@ export const otpVerifiedAction = (userData) => (dispatch) => {
 */
 export const getAllGradesAction = () => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_GRADES })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/get_all_grade`).then((response) => {
+  axios.get(`${apiUrl}/api/v1/student/get_all_grade`).then((response) => {
     dispatch({
       type: constants.GET_ALL_GRADES,
       payload: {
@@ -286,7 +286,7 @@ export const getAllGradesAction = () => (dispatch) => {
 */
 export const getAllCountriesAction = () => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_COUNTRIES })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/country/get_all_country`).then((response) => {
+  axios.get(`${apiUrl}/api/v1/country/get_all_country`).then((response) => {
     dispatch({
       type: constants.GET_ALL_COUNTRIES,
       payload: {
@@ -311,7 +311,7 @@ export const getAllCountriesAction = () => (dispatch) => {
 */
 export const getAllStatesAction = (countryid) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_STATES })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/state/get_all_states`, { counrty_id: countryid }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/state/get_all_states`, { counrty_id: countryid }).then((response) => {
     dispatch({
       type: constants.GET_ALL_STATES,
       payload: {
@@ -336,7 +336,7 @@ export const getAllStatesAction = (countryid) => (dispatch) => {
 */
 export const getAllDistrictAction = (stateid) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_DISTRICTS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/city/get_all_cities`, { state_id: stateid }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/city/get_all_cities`, { state_id: stateid }).then((response) => {
     dispatch({
       type: constants.GET_ALL_DISTRICTS,
       payload: {
@@ -359,7 +359,7 @@ export const getAllDistrictAction = (stateid) => (dispatch) => {
 // Get All School data
 export const getAllSchoolAction = () => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_SCHOOL_DETAILS })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/school/get-all-school`).then((response) => {
+  axios.get(`${apiUrl}/api/v1/school/get-all-school`).then((response) => {
     dispatch({
       type: constants.GET_ALL_SCHOOL_DETAILS,
       payload: {
@@ -384,7 +384,7 @@ export const getAllSchoolAction = () => (dispatch) => {
 */
 export const studentRegister = (studentData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_SIGNUP_STUDENT })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/register`, studentData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/register`, studentData).then((response) => {
     dispatch({
       type: constants.SIGNUP_STUDENT,
       payload: {
@@ -413,7 +413,7 @@ export const studentRegister = (studentData) => (dispatch) => {
 */
 export const otpVerification = (studentData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_VERIFY_OTP_SIGNUP })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/email-otp-verify`, studentData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/email-otp-verify`, studentData).then((response) => {
     dispatch({
       type: constants.VERIFY_OTP_SIGNUP,
       payload: {
@@ -439,7 +439,7 @@ export const otpVerification = (studentData) => (dispatch) => {
 */
 export const mobileVerification = (studentData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_MOBILE_VERIFICATION })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/email-otp-send`, studentData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/email-otp-send`, studentData).then((response) => {
     dispatch({
       type: constants.MOBILE_VERIFICATION,
       payload: {
@@ -465,7 +465,7 @@ export const mobileVerification = (studentData) => (dispatch) => {
 */
 export const mobileOTPVerification = (studentData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_MOBILE_VERIFICATION_OTP_SEND })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/email-otp-verify`, studentData).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/email-otp-verify`, studentData).then((response) => {
     dispatch({
       type: constants.MOBILE_VERIFICATION_OTP_SEND,
       payload: {
@@ -491,7 +491,7 @@ export const mobileOTPVerification = (studentData) => (dispatch) => {
 */
 export const logoutAction = (token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_LOGOUT })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/logout`, { headers: { Authorization: token } }).then((response) => {
+  axios.get(`${apiUrl}/api/v1/student/logout`, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.LOGOUT,
       payload: {
@@ -517,7 +517,7 @@ export const logoutAction = (token) => (dispatch) => {
 */
 export const getQuestionsByIDAction = (id, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_QUESTIONS_BY_ID })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/question-of-subcategory`, { id }, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/question-of-subcategory`, { id }, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_QUESTIONS_BY_ID,
       payload: {
@@ -546,7 +546,7 @@ export const getQuestionsByIDAction = (id, token) => (dispatch) => {
 */
 export const submitAnswer = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_SUBMIT_OPTION })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/question/select-option`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/question/select-option`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.SUBMIT_OPTION,
       payload: {
@@ -572,7 +572,7 @@ export const submitAnswer = (data, token) => (dispatch) => {
 */
 export const question = (id, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_QUESTIONS })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/question-of-subcategory`, { id }, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/question-of-subcategory`, { id }, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.QUESTIONS,
       payload: {
@@ -599,7 +599,7 @@ export const question = (id, token) => (dispatch) => {
 */
 export const submitTest = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_FINISH_TEST })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/test/finish`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/test/finish`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.FINISH_TEST,
       payload: {
@@ -629,7 +629,7 @@ export const submitTest = (data, token) => (dispatch) => {
 */
 export const viewProfileAction = (token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_VIEW_PROFILE })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/student-profile`, {}, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/student-profile`, {}, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.VIEW_PROFILE,
       payload: {
@@ -651,7 +651,7 @@ export const viewProfileAction = (token) => (dispatch) => {
 
 export const editProfileAction = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_UPDATE_PROFILE })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/update-profile`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/update-profile`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.UPDATE_PROFILE,
       payload: {
@@ -677,7 +677,7 @@ export const editProfileAction = (data, token) => (dispatch) => {
 */
 export const changePasswordAction = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_CHANGE_PASSWORD })
-  axios.post(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/student/change-password`, data, { headers: { Authorization: token } }).then((response) => {
+  axios.post(`${apiUrl}/api/v1/student/change-password`, data, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.CHANGE_PASSWORD,
       payload: {
@@ -703,7 +703,7 @@ export const changePasswordAction = (data, token) => (dispatch) => {
 */
 export const getAllBoardsAction = (token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_BOARDS_DATA })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/board/get-all-board`, { headers: { Authorization: token } }).then((response) => {
+  axios.get(`${apiUrl}/api/v1/board/get-all-board`, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_BOARDS_DATA,
       payload: {
@@ -728,7 +728,7 @@ export const getAllBoardsAction = (token) => (dispatch) => {
 */
 export const getAllSchoolsAction = (token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_ALL_SCHOOLS })
-  axios.get(`${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/school/get-all-school`, { headers: { Authorization: token } }).then((response) => {
+  axios.get(`${apiUrl}/api/v1/school/get-all-school`, { headers: { Authorization: token } }).then((response) => {
     dispatch({
       type: constants.GET_ALL_SCHOOLS,
       payload: {

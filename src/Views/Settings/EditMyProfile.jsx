@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useSnackbar } from 'react-notistack'
 import { useNavigate } from 'react-router-dom'
 import defaultImage from '../../assets/default_profile copy.jpg'
+const apiUrl = import.meta.env.VITE_AXIOS_BASE_URL_DEV;
 
 /* Components */
 import {
@@ -142,7 +143,7 @@ function EditMyProfile () {
       reset({
         files: {
           0: {
-            name: `${process.env.REACT_APP_AXIOS_BASE_URL}${data?.profile}`,
+            name: `${apiUrl}${data?.profile}`,
             type: 'image/png'
           },
           length: 1
