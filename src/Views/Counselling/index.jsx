@@ -26,7 +26,7 @@ const Counselling = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   // useState
-  const [startDate, setStartDate] = useState()
+  const [startDate, setStartDate] = useState(new Date())
   const [availableTimeSlots, setAvailableTimeSlots] = useState([])
   const [selectedTimeFilter, setSelectedTimeFilter] = useState()
   // const [counsellorType, setCounsellorType] = useState('career_counsellor')
@@ -127,6 +127,7 @@ const Counselling = () => {
         time: selectedTimeFilter
       }
       dispatch(getAllCounsellorData(data, token))
+      
     }
   }, [selectedTimeFilter])
 
@@ -166,28 +167,62 @@ const Counselling = () => {
     }
   }, [key])
 
-  useEffect(() => {
-    // Fetch profile images and update the state
-    const fetchProfileImages = async () => {
-      const imagePromises = filteredCounsellorData?.map(async (data) => {
-        try {
-          const profileImage = await getImage([{
+  // OLD Code
+  // useEffect(() => {
+  //   // Fetch profile images and update the state
+  //   const fetchProfileImages = async () => {
+  //     const imagePromises = filteredCounsellorData?.map(async (data) => {
+  //       try {
+  //         const profileImage = await getImage([{
+  //           path: data?.profile,
+  //           flag: 'profile'
+  //         }], token)
+  //         return profileImage
+  //       } catch (error) {
+  //         console.error('Error fetching profile image:', error)
+  //         return null // Handle the error gracefully
+  //       }
+  //     })
+      
+  //     const images = await Promise.all(imagePromises)
+  //     setProfileImages(images)
+  //   }
+
+  //   fetchProfileImages()
+  // }, [filteredCounsellorData])
+
+
+  //NEW CODE 
+ const safeCounsellorData = Array.isArray(filteredCounsellorData) ? filteredCounsellorData : [];
+
+useEffect(() => {
+  const fetchProfileImages = async () => {
+    const imagePromises = safeCounsellorData.map(async (data) => {
+      try {
+        const profileImage = await getImage(
+          [{
             path: data?.profile,
             flag: 'profile'
-          }], token)
-          return profileImage
-        } catch (error) {
-          console.error('Error fetching profile image:', error)
-          return null // Handle the error gracefully
-        }
-      })
+          }],
+          token
+        );
+         // Log what comes from getImage
+        console.log(`[Image Fetch] #${i} =>`, imageData)
+        return profileImage;
+      } catch (error) {
+        console.error('Error fetching profile image:', error);
+        return null;
+      }
+    });
 
-      const images = await Promise.all(imagePromises)
-      setProfileImages(images)
-    }
+    const images = await Promise.all(imagePromises);
+    setProfileImages(images);
+  };
+   console.log("Counsellor Data",filteredCounsellorData)
+  fetchProfileImages();
+}, [filteredCounsellorData, token]);
 
-    fetchProfileImages()
-  }, [filteredCounsellorData])
+
   // useEffect(() => {
   //   const dataObject = {
   //     type: key
@@ -216,7 +251,13 @@ const Counselling = () => {
                             className='form-control'
                             selected={startDate}
                             onChange={(date) => setStartDate(date)}
-                            minDate={new Date()}
+                            minDate={new Date(2000, 0, 1)}       // ✅ allows selecting from year 2000
+  maxDate={new Date()} 
+                            dateFormat="dd/MM/yyyy"
+                            isClearable={false}
+                              showMonthDropdown
+  showYearDropdown
+  dropdownMode="select"
                           />
                         </div>
                         <div>

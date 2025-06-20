@@ -27,9 +27,41 @@ export const getAllAvailableSlots = (token) => (dispatch) => {
 }
 
 // Counsellor Data
+// export const getAllCounsellorData = (data, token) => (dispatch) => {
+//   dispatch({ type: constants.CLEAR_GET_ALL_FILTERED_COUNSELLOR })
+//   axios.post(`${apiUrl}/api/v1/counsellor/get-filtered-counsellors`, data, { headers: { Authorization: token } }).then((response) => {
+//     dispatch({
+//       type: constants.GET_ALL_FILTERED_COUNSELLOR,
+//       payload: {
+//         resStatus: true,
+//         resMessage: response.data.message,
+//         counsellorData: response.data.data
+//       }
+//     })
+//   }).catch((error) => {
+//     dispatch({
+//       type: constants.GET_ALL_FILTERED_COUNSELLOR,
+//       payload: {
+//         resStatus: error?.response?.data.status,
+//         resMessage: error?.response?.data?.message
+//       }
+//     })
+//   })
+// }
+
 export const getAllCounsellorData = (data, token) => (dispatch) => {
+  console.log('[Counsellor] Dispatching getAllCounsellorData with:', data)
+
   dispatch({ type: constants.CLEAR_GET_ALL_FILTERED_COUNSELLOR })
-  axios.post(`${apiUrl}/api/v1/counsellor/get-filtered-counsellors`, data, { headers: { Authorization: token } }).then((response) => {
+
+  axios.post(
+    `${apiUrl}/api/v1/counsellor/get-filtered-counsellors`,
+    data,
+    { headers: { Authorization: token } }
+  )
+  .then((response) => {
+    console.log('[Counsellor] API Success Response:', response.data)
+
     dispatch({
       type: constants.GET_ALL_FILTERED_COUNSELLOR,
       payload: {
@@ -38,16 +70,21 @@ export const getAllCounsellorData = (data, token) => (dispatch) => {
         counsellorData: response.data.data
       }
     })
-  }).catch((error) => {
+  })
+  .catch((error) => {
+    console.error('[Counsellor] API Error:', error?.response?.data || error.message)
+
     dispatch({
       type: constants.GET_ALL_FILTERED_COUNSELLOR,
       payload: {
-        resStatus: error?.response?.data.status,
+        resStatus: error?.response?.data?.status,
         resMessage: error?.response?.data?.message
       }
     })
   })
 }
+
+
 
 // Session History Data
 export const getSessionsHistory = (data, token) => (dispatch) => {

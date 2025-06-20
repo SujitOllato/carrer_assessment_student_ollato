@@ -30,6 +30,7 @@ function CancelSessionDetails () {
   const navigate = useNavigate()
   const token = localStorage.getItem('token')
   const [starsValue, setStarsValue] = useState()
+  const apiUrl = import.meta.env.VITE_AXIOS_BASE_URL_DEV;
 
   // useSelector
   const sessionDetailArray = useSelector(
@@ -91,7 +92,7 @@ function CancelSessionDetails () {
   useEffect(() => {
     if (previousProps?.downloadReportLinkData !== downloadReportLinkData) {
       if (downloadReportLinkData) {
-        window.open(`${process.env.REACT_APP_AXIOS_BASE_URL}${downloadReportLinkData}`, '_blank')
+        window.open(`${apiUrl}${downloadReportLinkData}`, '_blank')
       }
     }
     return () => {

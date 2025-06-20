@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { useSnackbar } from 'react-notistack'
-
+const apiUrl = import.meta.env.VITE_AXIOS_BASE_URL_DEV;
 export const useS3Upload = () => {
   const { enqueueSnackbar } = useSnackbar()
 
   async function uploadFile (payload) {
     try {
       const presignedData = await axios.post(
-        `${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/pre-signed-for-private`,
+        `${apiUrl}/v1/pre-signed-for-private`,
         { data: payload }
       )
       if (presignedData?.data?.data) {
@@ -43,7 +43,7 @@ export const useS3Upload = () => {
   const getImage = async (filepath, token) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_AXIOS_BASE_URL_DEV}/v1/getUrl-for-private`,
+        `${apiUrl}/v1/getUrl-for-private`,
         { data: filepath },
         { headers: { Authorization: token } }
       )
