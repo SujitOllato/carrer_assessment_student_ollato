@@ -155,7 +155,7 @@ const TestQuestion = () => {
 
   useEffect(() => {
     if (selectedQuestion?.path) {
-      async function getImageUrl () {
+      async function getImageUrl() {
         const data = [
           {
             path: selectedQuestion?.path,
@@ -174,7 +174,7 @@ const TestQuestion = () => {
       const hasImages =
         selectedQuestion?.options?.some((i) => i.path !== null) || false
       if (hasImages) {
-        async function getImageUrl () {
+        async function getImageUrl() {
           const data = selectedQuestion?.options
             ?.map((opt, i) => {
               if (opt?.path) {
@@ -359,10 +359,10 @@ const TestQuestion = () => {
           ) : (
             <>
               {alredyGiven ||
-              errorStatus === null ||
-              errorStatus === 500 ||
-              errorStatus === true ||
-              errorStatus === 406 ? (
+                errorStatus === null ||
+                errorStatus === 500 ||
+                errorStatus === true ||
+                errorStatus === 406 ? (
                 <Suspense fallback={<Loader />}>
                   <div className="question-pagination-box">
                     <div className="row w-100 align-items-center">
@@ -396,9 +396,9 @@ const TestQuestion = () => {
                       <div className="col-lg-7 order-2 order-lg-0">
                         <div className="question-box">
                           <h4 className="question">
-                            {ReactHtmlParser(
-                              selectedQuestion?.question?.replace('[e0]', ' ')
-                            )}
+                            <h4 className="question">
+                              {parse(String(selectedQuestion?.question?.replace('[e0]', ' ') || ''))}
+                            </h4>
                           </h4>
                           {selectedQuestion?.is_image === true &&
                             selectedQuestion?.path && (
@@ -408,7 +408,7 @@ const TestQuestion = () => {
                                   onClick={() => openImageViewer(0)}
                                 />
                               </div>
-                          )}
+                            )}
                           {isViewerOpen && (
                             // <Box mt={5}>
                             <ImageViewer
@@ -454,19 +454,18 @@ const TestQuestion = () => {
                                     onChange={() => setOption(opt.id)}
                                   >
                                     <Form.Check
-                                      className={`${
-                                        selectedOptions?.find(
-                                          (item) => item.label === selectedCount
-                                        )?.value === opt.id
+                                      className={`${selectedOptions?.find(
+                                        (item) => item.label === selectedCount
+                                      )?.value === opt.id
                                           ? 'checked'
                                           : ''
-                                      }`}
+                                        }`}
                                     >
                                       <Form.Check.Input
                                         type="radio"
                                         id={index + selectedCount}
                                         name={'option-' + selectedCount}
-                                        onChange={() => {}}
+                                        onChange={() => { }}
                                         value={opt.id}
                                         checked={
                                           selectedOptions?.find(
@@ -540,7 +539,7 @@ const TestQuestion = () => {
                                         to=""
                                         className={
                                           unSelectQuestion === null ||
-                                          unSelectQuestion === undefined
+                                            unSelectQuestion === undefined
                                             ? selectedCount === index + 1 ||
                                               selectedOptions?.find(
                                                 (i) => i.label === index + 1
@@ -554,7 +553,7 @@ const TestQuestion = () => {
                                               (i) => i === question?.id
                                             )
                                               ? selectedQuestion?.id ===
-                                              question?.id
+                                                question?.id
                                                 ? 'quesno active'
                                                 : 'quesno'
                                               : 'quesno active'
@@ -579,7 +578,7 @@ const TestQuestion = () => {
                     )}
                   </div>
                 </Suspense>
-                  ) : (
+              ) : (
                 <Suspense fallback={<Loader />}>
                   {errorStatus === 422 ? (
                     <Alreadygiventest />
@@ -587,7 +586,7 @@ const TestQuestion = () => {
                     <NeedsPreviousTest errorMessageProps={errorMessage} />
                   )}
                 </Suspense>
-                  )}
+              )}
             </>
           )}
         </div>

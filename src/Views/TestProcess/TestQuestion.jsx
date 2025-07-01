@@ -76,7 +76,7 @@ const TestQuestion = () => {
     testCompleted,
     allTestCompletedFlag
   }).current
-  useEffect(() => {}, [params?.id])
+  useEffect(() => { }, [params?.id])
   const openImageViewer = useCallback((index) => {
     setCurrentImage(index)
     setIsViewerOpen(true)
@@ -124,7 +124,7 @@ const TestQuestion = () => {
 
   useEffect(() => {
     if (selectedQuestion?.path) {
-      async function getImageUrl () {
+      async function getImageUrl() {
         const data = [
           {
             path: selectedQuestion?.path,
@@ -143,7 +143,7 @@ const TestQuestion = () => {
       const hasImages =
         selectedQuestion?.options?.some((i) => i.path !== null) || false
       if (hasImages) {
-        async function getImageUrl () {
+        async function getImageUrl() {
           const data = selectedQuestion?.options
             ?.map((opt, i) => {
               if (opt?.path) {
@@ -375,10 +375,10 @@ const TestQuestion = () => {
                       <div className="col-lg-7 order-2 order-lg-1">
                         <div className="question-box">
                           <h4 className="question">
-                            {ReactHtmlParser(
-                              selectedQuestion?.question?.replace('[e0]', ' ')
-                            )}
+                            {parse(String(selectedQuestion?.question?.replace('[e0]', ' ') || ''))}
                           </h4>
+
+
                           {selectedQuestion?.is_image === true && (
                             <div>
                               <img
@@ -404,7 +404,20 @@ const TestQuestion = () => {
                               }}
                             />
                           )}
+
                           {selectedQuestion?.is_math === true && (
+                            <div>
+                              <h4 className="font-black">
+                                <MathJaxContext>
+                                  <MathJax inline dynamic>
+                                    {selectedQuestion?.math_expression}
+                                  </MathJax>
+                                </MathJaxContext>
+                              </h4>
+                            </div>
+                          )}
+
+                          {/* {selectedQuestion?.is_math === true && (
                             <div>
                               <h4 className="font-black">
                                 <MathJax.Provider>
@@ -419,7 +432,7 @@ const TestQuestion = () => {
                                 </MathJax.Provider>
                               </h4>
                             </div>
-                          )}
+                          )} */}
                           <div className="option-box">
                             {selectedQuestion?.options &&
                               selectedQuestion?.options.length >= 0 &&
@@ -431,13 +444,12 @@ const TestQuestion = () => {
                                     onChange={() => setOption(opt.id)}
                                   >
                                     <Form.Check
-                                      className={`${
-                                        selectedOptions?.find(
-                                          (item) => item.label === selectedCount
-                                        )?.value === opt.id
+                                      className={`${selectedOptions?.find(
+                                        (item) => item.label === selectedCount
+                                      )?.value === opt.id
                                           ? 'checked'
                                           : ''
-                                      }`}
+                                        }`}
                                     >
                                       <Form.Check.Input
                                         type="radio"
@@ -506,7 +518,7 @@ const TestQuestion = () => {
                                           to=""
                                           className={
                                             unSelectQuestion === null ||
-                                            unSelectQuestion === undefined
+                                              unSelectQuestion === undefined
                                               ? selectedCount === index + 1 ||
                                                 selectedOptions?.find(
                                                   (i) => i.label === index + 1
@@ -520,7 +532,7 @@ const TestQuestion = () => {
                                                 (i) => i === question?.id
                                               )
                                                 ? selectedQuestion?.id ===
-                                                question?.id
+                                                  question?.id
                                                   ? 'quesno active'
                                                   : 'quesno'
                                                 : 'quesno active'

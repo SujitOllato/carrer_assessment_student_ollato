@@ -28,7 +28,7 @@ const PackageHistory = () => {
   const responseStatus = useSelector(state => state.packages.resStatus);
   const responseMessage = useSelector(state => state.packages.resMessage);
   const previousProps = useRef({ packageHistoryData, responseStatus, responseMessage }).current;
-
+const apiUrl = import.meta.env.VITE_AXIOS_BASE_URL_DEV;
   useEffect(() => {
     if (responseStatus === 401) {
       localStorage.removeItem('token');
@@ -91,7 +91,7 @@ const PackageHistory = () => {
       sortable: false,
       renderCell: (params) => (
         <a
-          href={`${process.env.REACT_APP_AXIOS_BASE_URL}api/v1/student/purchased-package/invoice/${params.row.package_custom_id}`}
+          href={`${apiUrl}/api/v1/student/purchased-package/invoice/${params.row.package_custom_id}`}
           target="_blank"
           rel="noopener noreferrer"
         >
