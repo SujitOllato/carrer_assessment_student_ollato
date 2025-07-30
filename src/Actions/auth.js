@@ -36,6 +36,7 @@ export const emailVerification = (studentData) => (dispatch) => {
 export const login = (userData) => (dispatch) => {
   dispatch({ type: constants.CLEAR_LOGIN })
   axios.post(`${apiUrl}/api/v1/student/login-with-password`, userData).then((response) => {
+
     localStorage.setItem('token', response.data.Authorization)
     localStorage.setItem('profile', JSON.stringify({ first_name: response.data.data.first_name, last_name: response.data.data.last_name, profile: response.data.data.profile }))
     dispatch({
