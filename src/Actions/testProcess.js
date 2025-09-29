@@ -26,9 +26,11 @@ export const getTestProcess = (token) => (dispatch) => {
   })
 }
 
+
 export const getTestProcessCategory = (data, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GET_TEST_CATEGORY_BY_ID_DATA })
   axios.post(`${apiUrl}/api/v1/student/test-subcategory`, data, { headers: { Authorization: token } }).then((response) => {
+    console.log("response", response);
     dispatch({
       type: constants.GET_TEST_CATEGORY_BY_ID_DATA,
       payload: {

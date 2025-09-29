@@ -136,11 +136,11 @@ function RoutesFile () {
           path='/assetment'
           element={<PrivateRoutes element={<Assessment />} />}
         />
-        <Route
+        {/* <Route
           exact
           path='/package'
           element={<PrivateRoutes element={<Package />} />}
-        />
+        /> */}
          <Route
           exact
           path='/package/add-on-packages'

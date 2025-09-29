@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import TitleHeader from '../../Components/TitleHeader';
 import { useLocation } from 'react-router-dom';
@@ -31,35 +32,107 @@ export default function Graph() {
 
   return (
     <>
-      <Box sx={{ padding: 2 }}>
+  <Box sx={{ padding: 2 }}>
         <TitleHeader name="Assessment" />
-        <Box className="main-layout whitebox-layout test-desc" sx={{ marginBottom: 4 }}>
-          <Typography variant="h5" className="testNameTitle">CONCLUSIVE FINDINGS</Typography>
-          <Grid container spacing={2} className="chartSection chart-img" alignItems="center">
+        <Box
+          className="main-layout whitebox-layout test-desc"
+          sx={{ marginBottom: 4 }}
+        >
+          <Typography variant="h5" className="testNameTitle">
+            CONCLUSIVE FINDINGS
+          </Typography>
+          <Grid
+            container
+            spacing={2}
+            className="chartSection chart-img"
+            alignItems="center"
+          >
             <Grid item xs={12} md={6}>
               <Box className="chart-image">
-                <img src={ChartImg} alt="" style={{ width: '100%' }} />
+                <img src={ChartImg} alt="" style={{ width: "100%" }} />
               </Box>
             </Grid>
             <Grid item xs={12} md={6}>
               <Box className="findings-point-bg">
                 <ul>
-                  {
-                    grapnDataArray?.conclusive_findings?.length > 0
-                      ? grapnDataArray.conclusive_findings.map((conclusiveData, index) => (
-                        <li key={index}>{conclusiveData?.career_profile_detail_name}</li>
-                      ))
-                      : <Typography>No Data Found</Typography>
-                  }
+                  {grapnDataArray?.conclusive_findings?.length > 0 ? (
+                    grapnDataArray.conclusive_findings.map(
+                      (conclusiveData, index) => (
+                        <li key={index}>
+                          {conclusiveData?.career_profile_detail_name}
+                        </li>
+                      )
+                    )
+                  ) : (
+                    <Typography>No Data Found</Typography>
+                  )}
                 </ul>
               </Box>
             </Grid>
           </Grid>
+        </Box> 
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" }, // column on mobile, row on desktop
+            gap: 3, // space between charts
+          }}
+        >
+          {/* Aptitude Test */}
+          <Box
+            className="main-layout whitebox-layout test-desc"
+            sx={{ flex: 1, padding: 2 }}
+          >
+            <Typography variant="h6" className="testNameTitle">
+              Aptitude Test
+            </Typography>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart
+                data={buildChartData(
+                  grapnDataArray?.apptitude?.aptituteGraphLabel,
+                  grapnDataArray?.apptitude?.aptituteGraphValue
+                )}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis domain={[0, 10]} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#2170AC" />
+              </BarChart>
+            </ResponsiveContainer>
+          </Box>
+
+          {/* Interest Test */}
+          <Box
+            className="main-layout whitebox-layout test-desc"
+            sx={{ flex: 1, padding: 2 }}
+          >
+            <Typography variant="h6" className="testNameTitle">
+              Interest Test
+            </Typography>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart
+                data={buildChartData(
+                  grapnDataArray?.interest?.interestGraphLabel,
+                  grapnDataArray?.interest?.interestGraphValue
+                )}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis domain={[0, 10]} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#2170AC" />
+              </BarChart>
+            </ResponsiveContainer>
+          </Box>
         </Box>
 
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={6}>
-            <Box className="main-layout whitebox-layout test-desc" sx={{ padding: 2 }}>
+        {/* <Grid container spacing={4}>
+          <Grid item xs={12} md={6} >
+            <Box className="main-layout w-100 whitebox-layout test-desc" sx={{ padding: 2 }}>
               <Typography variant="h6" className="testNameTitle">Aptitude Test</Typography>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart
@@ -99,14 +172,11 @@ export default function Graph() {
               </ResponsiveContainer>
             </Box>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Box>
     </>
   );
 }
-
-
-
 
 // import React, { useEffect } from 'react'
 // import TitleHeader from '../../Components/TitleHeader'

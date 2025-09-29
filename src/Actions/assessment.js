@@ -53,26 +53,31 @@ export const getAssessmentData = (data, token) => (dispatch) => {
 /* Get All Packages History Data */
 export const downloadReport = (id, token) => (dispatch) => {
   dispatch({ type: constants.CLEAR_GENERATE_REPORT })
-  axios.get(`${apiUrl}/api/v1/getUrl/${id}`, { headers: { Authorization: token } }).then((response) => {
-    dispatch({
-      type: constants.GENERATE_REPORT,
-      payload: {
-        resStatus: true,
-        resMessage: response.data.message,
-        downloadReportLink: response?.data?.dataUrl?.sUrl,
-        isReportDownloaded: true
-      }
+  axios
+    .get(`${apiUrl}/api/v1/student/test-report/${id}`, {
+      headers: { Authorization: token },
     })
-  }).catch((error) => {
-    dispatch({
-      type: constants.GENERATE_REPORT,
-      payload: {
-        resStatus: false,
-        resMessage: error?.response?.data?.message,
-        isReportDownloaded: false
-      }
+    .then((response) => {
+      dispatch({
+        type: constants.GENERATE_REPORT,
+        payload: {
+          resStatus: true,
+          resMessage: response.data.message,
+          downloadReportLink: response?.data?.dataUrl?.sUrl,
+          isReportDownloaded: true,
+        },
+      });
     })
-  })
+    .catch((error) => {
+      dispatch({
+        type: constants.GENERATE_REPORT,
+        payload: {
+          resStatus: false,
+          resMessage: error?.response?.data?.message,
+          isReportDownloaded: false,
+        },
+      });
+    });
 }
 
 /* Get All Packages History Data */
